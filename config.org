@@ -26,8 +26,8 @@
 
 **** Change the default font and theme
 #+BEGIN_SRC emacs-lisp
-  (set-face-attribute 'default nil :font "undefined-15")
-  (load-theme 'neon t)
+  (set-face-attribute 'default nil :font "Terminus-14")
+  (load-theme 'spacemacs-dark t)
 #+END_SRC
 
 **** Disable line-wrapping
@@ -59,8 +59,9 @@
 
 **** Move backups to ~/.trash
 #+BEGIN_SRC emacs-lisp
-  (setq backup-directory-alist            '((".*" . "~/.trash")))
+  (setq backup-directory-alist '((".*" . "~/.trash")))
 #+END_SRC
+
 
 
 * Packages
@@ -176,11 +177,16 @@
     :hook (prog-mode . rainbow-delimiters-mode))
 #+END_SRC
 
-**** Emojis 😳
+**** Emojis 
 #+BEGIN_SRC emacs-lisp
-    (use-package emojify
-      :hook (after-init . global-emojify-mode)
-      (setq global-emojify-mode t))
+  (use-package emojify)
+  (add-hook 'after-init-hook #'global-emojify-mode)
+#+END_SRC
+
+**** Zen mode
+#+BEGIN_SRC emacs-lisp
+  (load-file "~/.emacs.d/zen-mode.el")
+  (require 'zen-mode)
 #+END_SRC
 
 **** Manage projects
@@ -261,7 +267,12 @@
     "scale text"
     ("j" text-scale-increase "in")
     ("k" text-scale-decrease "out")
-    ("f" nil "finished" :exit t))
+    ("q" nil "finished" :exit t))
+  (defhydra hydra-move-window (:timeout 4)
+    "move window"
+    ("h" evil-window-decrease-width "left")
+    ("l" evil-window-increase-width "right")
+    ("q" nil "quit" :exit t))
 #+END_SRC
 
 
@@ -282,27 +293,30 @@
 
 **** Leader key functions
 #+BEGIN_SRC emacs-lisp
-(zoey/leader-keys
-    "b"   '(:ignore t :which-key "buffer")
-    "bk"  '(:ignore t :which-key "kill buffer")
-    "f"   '(:ignore t :which-key "file")
-    "h"   '(:ignore t :which-key "help")
-    "t"   '(:ignore t :which-key "toggles")
-    "s"   '(subs :which-key "substitute")
-    "e"   '(xref-find-definitions :which-key "jump to def")
-    "q"   '(xref-pop-marker-stack :which-key "go back")
-    "tt"  '(counsel-load-theme :which-key "choose theme")
-    "ts"  '(hydra-text-scale/body :which-key "scale text")
-    "hf"  '(describe-function :which-key "describe function")
-    "hk"  '(describe-key :which-key "describe key")
-    "hp"  '(describe-package :which-key "describe package")
-    "fn"  '(make-empty-file :which-key "create file")
-    "fe"  '(counsel-find-file :which-key "edit file")
-    "fr"  '(sufind :which-key "open as root")
-    "be"  '(eval-buffer :which-key "eval buffer")
-    "br"  '(revert-buffer :which-key "revert buffer") 
-    "bs"  '(counsel-switch-buffer :which-key "switch buffer")
-    "bw"  '(save-buffer :which-key "buffer write")
-    "bkc" '(kill-current-buffer :which-key "kill current buffer")
-    "bks" '(kill-buffer :which-key "kill a buffer"))
+  (zoey/leader-keys
+      "b"   '(:ignore t :which-key "buffer")
+      "bk"  '(:ignore t :which-key "kill buffer")
+      "f"   '(:ignore t :which-key "file")
+      "h"   '(:ignore t :which-key "help")
+      "t"   '(:ignore t :which-key "toggles")
+      "s"   '(subs :which-key "substitute")
+      "e"   '(xref-find-definitions :which-key "jump to def")
+      "q"   '(xref-pop-marker-stack :which-key "go back")
+      "tt"  '(counsel-load-theme :which-key "choose theme")
+      "ts"  '(hydra-text-scale/body :which-key "scale text")
+      "te"  '(global-emojify-mode :which-key "toggle emojis")
+      "tm"  '(hydra-move-window/body :which-key "move window")
+      "tz"  '(zen-mode :which-key "toggle zen-mode")
+      "hf"  '(describe-function :which-key "describe function")
+      "hk"  '(describe-key :which-key "describe key")
+      "hp"  '(describe-package :which-key "describe package")
+      "fn"  '(make-empty-file :which-key "create file")
+      "fe"  '(counsel-find-file :which-key "edit file")
+      "fr"  '(sufind :which-key "open as root")
+      "be"  '(eval-buffer :which-key "eval buffer")
+      "br"  '(revert-buffer :which-key "revert buffer") 
+      "bs"  '(counsel-switch-buffer :which-key "switch buffer")
+      "bw"  '(save-buffer :which-key "buffer write")
+      "bkc" '(kill-current-buffer :which-key "kill current buffer")
+      "bks" '(kill-buffer :which-key "kill a buffer"))
 #+END_SRC
