@@ -26,7 +26,7 @@
 
 **** Change the default font and theme
 #+BEGIN_SRC emacs-lisp
-  (set-face-attribute 'default nil :font "Terminus-14")
+  (set-face-attribute 'default nil :font "Terminus-11")
   (load-theme 'spacemacs-dark t)
 #+END_SRC
 
