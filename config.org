@@ -27,7 +27,19 @@
 **** Change the default font and theme
 #+BEGIN_SRC emacs-lisp
   (set-face-attribute 'default nil :font "Terminus-11")
-  (load-theme 'spacemacs-dark t)
+  (set-foreground-color "white")
+  (set-background-color "#161616")
+  (set-face-foreground 'vertical-border "#333333")
+  (set-face-foreground 'mode-line "#88DDDD")
+  (set-face-background 'mode-line "#333333")
+  (set-face-foreground 'mode-line-inactive "#595959")
+  (set-face-background 'mode-line-inactive "black")
+  (set-face-foreground 'font-lock-comment-face "#808080")
+  (custom-set-faces
+   '(mode-line ((t (:box (:line-width 1 :color "#333333"))))))
+  (custom-set-faces
+   '(mode-line-inactive ((t (:box (:line-width 1 :color "#333333"))))))
+  ;;  (load-theme 'spacemacs-dark t)
 #+END_SRC
 
 **** Disable line-wrapping
@@ -125,7 +137,7 @@
     (counsel-find-file "/su::/"))
 #+END_SRC
 
-**** Set up leader prefix and commands using keybinds included in zoey/leader-keys 
+**** Set up leader prefix and commands using keybinds included in zoey/leader-keys
 #+BEGIN_SRC emacs-lisp
   (use-package general
     :config
@@ -156,7 +168,7 @@
 #+END_SRC
 
 **** C-x C-h Leader etc... command helper
-#+BEGIN_SRC emacs-lisp     
+#+BEGIN_SRC emacs-lisp
   (use-package which-key
     :init (which-key-mode)
     :diminish which-key-mode
@@ -177,7 +189,7 @@
     :hook (prog-mode . rainbow-delimiters-mode))
 #+END_SRC
 
-**** Emojis 
+**** Emojis
 #+BEGIN_SRC emacs-lisp
   (use-package emojify)
   (add-hook 'after-init-hook #'global-emojify-mode)
@@ -201,8 +213,8 @@
   (use-package dashboard
       :diminish dashboard-mode
       :config
-      (setq dashboard-banner-logo-title "hewwo uwu, he do be t-posing tho 😳")
-      (setq dashboard-startup-banner "/home/zoey/Pictures/uwu_pose.png")
+      (setq dashboard-banner-logo-title "hewwo")
+      (setq dashboard-startup-banner "~/.emacs.d/img/nichijou.png")
       (setq dashboard-center-content t)
       (setq dashboard-set-heading-icons t)
       (setq dashboard-set-file-icons t)
@@ -242,7 +254,7 @@
     ;; Use visual line motions even outside of visual-line-mode buffers
     (evil-global-set-key 'motion "j" 'evil-next-visual-line)
     (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
-    ;; 
+    ;;
     (evil-set-initial-state 'messages-buffer-mode 'normal)
     (evil-set-initial-state 'dashboard-mode 'normal)
     ;; Vim-like history and redo
@@ -260,7 +272,7 @@
     (evil-collection-init))
 #+END_SRC
 
-**** Tie related commands into a family of short bindings with a common prefix 
+**** Tie related commands into a family of short bindings with a common prefix
 #+BEGIN_SRC emacs-lisp
   (use-package hydra)
   (defhydra hydra-text-scale (:timeout 4)
@@ -278,8 +290,8 @@
 
 
 * Keybinds
-  
-**** Make ESC quit prompts 
+
+**** Make ESC quit prompts
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 #+END_SRC
@@ -314,7 +326,7 @@
       "fe"  '(counsel-find-file :which-key "edit file")
       "fr"  '(sufind :which-key "open as root")
       "be"  '(eval-buffer :which-key "eval buffer")
-      "br"  '(revert-buffer :which-key "revert buffer") 
+      "br"  '(revert-buffer :which-key "revert buffer")
       "bs"  '(counsel-switch-buffer :which-key "switch buffer")
       "bw"  '(save-buffer :which-key "buffer write")
       "bkc" '(kill-current-buffer :which-key "kill current buffer")

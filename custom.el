@@ -23,11 +23,12 @@
      ("XXX+" . "#dc752f")
      ("\\?\\?\\?+" . "#dc752f")))
  '(package-selected-packages
-   '(inkpot-theme spacemacs-theme emojify xref which-key use-package undo-tree rainbow-mode rainbow-delimiters projectile ivy-rich hydra helpful general ewal evil-collection elcord dracula-theme doom-modeline dashboard counsel consult-lsp autothemer))
+   '(emojify inkpot-theme spacemacs-theme xref which-key use-package undo-tree rainbow-mode rainbow-delimiters projectile ivy-rich hydra helpful general ewal evil-collection elcord dracula-theme doom-modeline counsel consult-lsp autothemer))
  '(pdf-view-midnight-colors '("#b2b2b2" . "#292b2e")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(mode-line ((t (:box (:line-width 1 :color "#333333")))))
+ '(mode-line-inactive ((t (:box (:line-width 1 :color "#333333"))))))
