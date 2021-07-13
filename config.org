@@ -1,7 +1,7 @@
 #+STARTUP: overview
 #+title:My emacs config
 #+author:zawy
-
+[[/img/config.png]]
 
 * Basic interface settings
 
@@ -72,8 +72,8 @@
      #+BEGIN_SRC emacs-lisp
        (setq backup-directory-alist '((".*" . "~/.trash")))
      #+END_SRC
-     
-     
+
+
 * Packages
 
 **** Initialize the package repositories
