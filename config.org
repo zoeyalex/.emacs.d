@@ -26,7 +26,7 @@
 
 **** Change the default font and theme
      #+BEGIN_SRC emacs-lisp
-       (set-face-attribute 'default nil :font "Terminus-11")
+       (set-face-attribute 'default nil :font "Terminus-15:weight=bold")
        (set-foreground-color "white")
        (set-background-color "#161616")
        (set-face-foreground 'vertical-border "#333333")
@@ -93,10 +93,11 @@
        (setq use-package-always-ensure t)
      #+END_SRC
 
-**** Discord integration
+
+**** Page Break lines
      #+BEGIN_SRC emacs-lisp
-       (require 'elcord)
-       (elcord-mode)
+       (use-package page-break-lines)
+       (page-break-lines-mode 1)
      #+END_SRC
 
 **** LSP Python hook
@@ -155,6 +156,10 @@
 	 :custom ((doom-modeline-height 15)))
      #+END_SRC
 
+**** Latex preview pane
+     #+BEGIN_SRC emacs-lisp
+        (latex-preview-pane-enable)
+     #+END_SRC
 **** Package that makes creating themes easier
      #+BEGIN_SRC emacs-lisp
        (use-package autothemer)
@@ -215,12 +220,15 @@
 	 (setq dashboard-banner-logo-title "你好 佐伊")
 	 (setq dashboard-startup-banner "~/.emacs.d/img/nichijou.png")
 	 (setq dashboard-center-content t)
+	 (setq dashboard-show-shortcuts t)
 	 (setq dashboard-set-heading-icons t)
 	 (setq dashboard-set-file-icons t)
 	 (setq dashboard-projects-backend 'projectile)
-	 (setq dashboard-items '((projects  . 5)
+	 (setq dashboard-items '((projects . 5)
 				 (bookmarks . 5)
 				 (recents . 5)))
+	 (setq dashboard-set-init-info t)
+	 (setq dashboard-projects-switch-function 'projectile-switch-project)
 	 (dashboard-setup-startup-hook))
      #+END_SRC
 
@@ -274,11 +282,6 @@
 **** Tie related commands into a family of short bindings with a common prefix
      #+BEGIN_SRC emacs-lisp
        (use-package hydra)
-       (defhydra hydra-text-scale (:timeout 4)
-	 "scale text"
-	 ("j" text-scale-increase "in")
-	 ("k" text-scale-decrease "out")
-	 ("q" nil "finished" :exit t))
        (defhydra hydra-move-window (:timeout 4)
 	 "move window"
 	 ("h" evil-window-decrease-width "left")
@@ -303,31 +306,35 @@
 
 **** Leader key functions
      #+BEGIN_SRC emacs-lisp
-       (zoey/leader-keys
-	 "b"   '(:ignore t :which-key "buffer")
-	 "bk"  '(:ignore t :which-key "kill buffer")
-	 "f"   '(:ignore t :which-key "file")
-	 "h"   '(:ignore t :which-key "help")
-	 "t"   '(:ignore t :which-key "toggles")
-	 "s"   '(subs :which-key "substitute")
-	 "e"   '(xref-find-definitions :which-key "jump to def")
-	 "q"   '(xref-pop-marker-stack :which-key "go back")
-	 "tt"  '(counsel-load-theme :which-key "choose theme")
-	 "ts"  '(hydra-text-scale/body :which-key "scale text")
-	 "te"  '(global-emojify-mode :which-key "toggle emojis")
-	 "td"  '(elcord-mode :which-key "toggle elcord")
-	 "tm"  '(hydra-move-window/body :which-key "move window")
-	 "tz"  '(zen-mode :which-key "toggle zen-mode")
-	 "hf"  '(describe-function :which-key "describe function")
-	 "hk"  '(describe-key :which-key "describe key")
-	 "hp"  '(describe-package :which-key "describe package")
-	 "fn"  '(make-empty-file :which-key "create file")
-	 "fe"  '(counsel-find-file :which-key "edit file")
-	 "fr"  '(sufind :which-key "open as root")
-	 "be"  '(eval-buffer :which-key "eval buffer")
-	 "br"  '(revert-buffer :which-key "revert buffer")
-	 "bs"  '(counsel-switch-buffer :which-key "switch buffer")
-	 "bw"  '(save-buffer :which-key "buffer write")
-	 "bkc" '(kill-current-buffer :which-key "kill current buffer")
-	 "bks" '(kill-buffer :which-key "kill a buffer"))
+	    (zoey/leader-keys
+	      "b"   '(:ignore t :which-key "buffer")
+	      "bk"  '(:ignore t :which-key "kill buffer")
+	      "f"   '(:ignore t :which-key "file")
+	      "h"   '(:ignore t :which-key "help")
+	      "t"   '(:ignore t :which-key "toggles")
+	      "s"   '(:ignore t :which-key "substitute")
+	      "m"   '(menu-set-font :which-key "font menu")
+	      "e"   '(xref-find-definitions :which-key "jump to def")
+	      "q"   '(xref-pop-marker-stack :which-key "go back")
+	      "tt"  '(counsel-load-theme :which-key "choose theme")
+	      "te"  '(global-emojify-mode :which-key "toggle emojis")
+	      "tm"  '(hydra-move-window/body :which-key "move window")
+	      "tr"  '(rainbow-mode :which-key "rainbow mode")
+	      "tz"  '(zen-mode :which-key "toggle zen-mode")
+	      "hf"  '(describe-function :which-key "describe function")
+	      "hk"  '(describe-key :which-key "describe key")
+	      "hp"  '(describe-package :which-key "describe package")
+	      "fn"  '(make-empty-file :which-key "create file")
+	      "fe"  '(counsel-find-file :which-key "edit file")
+	      "fr"  '(sufind :which-key "open as root")
+	      "sa"  '(subs :which-key "substitute all occurences")
+	      "sq"  '(query-replace :which-key "substitute query")
+	      "be"  '(eval-buffer :which-key "eval buffer")
+	      "br"  '(revert-buffer :which-key "revert buffer")
+	      "bs"  '(counsel-switch-buffer :which-key "switch buffer")
+	      "bw"  '(save-buffer :which-key "buffer write")
+	      "bkc" '(kill-current-buffer :which-key "kill current buffer")
+	      "bks" '(kill-buffer :which-key "kill a buffer"))
+
      #+END_SRC
+     
